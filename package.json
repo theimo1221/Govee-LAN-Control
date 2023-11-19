@@ -1,5 +1,5 @@
 {
-  "name": "@theimo1221/govee-lan-control",
+  "name": "theimo1221-govee-lan-control",
   "displayName": "Govee LAN Control",
   "version": "3.0.2-1",
   "description": "A package to control Govee devices using their new LAN control.",
