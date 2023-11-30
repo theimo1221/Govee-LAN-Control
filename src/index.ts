@@ -147,6 +147,9 @@ class GoveeConfig
      * @default 60000 (1 minute)
      */
     discoverInterval?: number = 60000;
+
+    logger: (message: string) => void = console.log;
+    errorLogger: (message: string) => void = console.error;
 }
 
 //  TODO: I have no idea why i have to define the variables outside the class. But when they're inside the class, they're always undefined outside of the constructor.
@@ -194,14 +197,14 @@ class Govee extends EventEmitter
             {
                 if (!socket)
                 {
-                    console.error("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
+                    this.config.errorLogger("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
                     let whileSocket = undefined;
                     while (whileSocket == undefined)
                     {
                         whileSocket = await this.getSocket();
                         if (whileSocket == undefined)
                         {
-                            console.error("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
+                            this.config.errorLogger("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
                         }
                     }
                     udpSocket = whileSocket;
@@ -238,7 +241,7 @@ class Govee extends EventEmitter
     public discover() {
         if (!udpSocket)
         {
-            console.error("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
+            this.config.errorLogger("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
             return;
         }
         let message = JSON.stringify(

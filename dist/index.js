@@ -455,12 +455,12 @@ var Govee = class extends import_events.EventEmitter {
     return new Promise((resolve, _reject) => {
       getGoveeDeviceSocket().then(async (socket) => {
         if (!socket) {
-          console.error("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
+          this.config.errorLogger("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
           let whileSocket = void 0;
           while (whileSocket == void 0) {
             whileSocket = await this.getSocket();
             if (whileSocket == void 0) {
-              console.error("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
+              this.config.errorLogger("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
             }
           }
           udpSocket = whileSocket;
@@ -481,7 +481,7 @@ var Govee = class extends import_events.EventEmitter {
   }
   discover() {
     if (!udpSocket) {
-      console.error("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
+      this.config.errorLogger("UDP Socket was not estabilished whilst trying to discover new devices.\n\nIs the server able to access UDP port 4001 and 4002 on address 239.255.255.250?");
       return;
     }
     let message = JSON.stringify(

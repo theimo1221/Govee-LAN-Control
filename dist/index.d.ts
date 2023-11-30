@@ -68,6 +68,8 @@ declare class GoveeConfig {
      * @default 60000 (1 minute)
      */
     discoverInterval?: number;
+    logger: (message: string) => void;
+    errorLogger: (message: string) => void;
 }
 
 interface DataResponseStatus {
